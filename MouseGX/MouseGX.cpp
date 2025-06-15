@@ -1,10 +1,10 @@
-﻿#include <windows.h>
-#include <string>
+﻿#include <string>
 #include <sstream>
 
 #define USE_PC // 定義を切り替えることでPC版とX68000版を切り替え可能
 
 #ifdef USE_PC
+#include <windows.h>
 // ウィンドウプロシージャ
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
@@ -238,10 +238,11 @@ int main() {
         // CPU負荷を減らすために少し待つ
         Sleep(50);
 #else
-        std::cout << "Position: (" << state.x << ", " << state.y << ") ";
-        std::cout << "Buttons: Left: " << (state.bl ? "ON" : "OFF")
-            << " | Right: " << (state.br ? "ON" : "OFF");
+        //std::cout << "Position: (" << state.x << ", " << state.y << ") ";
+        //std::cout << "Buttons: Left: " << (state.bl ? "ON" : "OFF")
+        //    << " | Right: " << (state.br ? "ON" : "OFF");
 
+        printf("\rX: %d  Y: %d  LButton: %d  RButton: %d  ", state.x, state.y, state.bl, state.br);
         fflush(stdout);
 
         // キー入力をチェックして終了
