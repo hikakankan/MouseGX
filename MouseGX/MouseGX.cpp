@@ -19,6 +19,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 #ifndef USE_PC
 #include <stdio.h>
 #include <stdint.h>
+#include <iostream>
 
 // IOCSコールをアセンブラで呼び出す
 void msinit()
@@ -237,12 +238,10 @@ int main() {
         // CPU負荷を減らすために少し待つ
         Sleep(50);
 #else
-        std::stringstream ss;
-        ss << "Position: (" << state.x << ", " << state.y << ") ";
-        ss << "Buttons: Left: " << (state.bl ? "ON" : "OFF")
+        std::cout << "Position: (" << state.x << ", " << state.y << ") ";
+        std::cout << "Buttons: Left: " << (state.bl ? "ON" : "OFF")
             << " | Right: " << (state.br ? "ON" : "OFF");
 
-        printf("\rX: %d  Y: %d  LButton: %d  RButton: %d  ", state.x, state.y, state.bl, state.br);
         fflush(stdout);
 
         // キー入力をチェックして終了
