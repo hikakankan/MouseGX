@@ -178,7 +178,7 @@ bool window_init(HWND& hwnd) {
         CLASS_NAME,
         L"マウスボタンテスト",
         WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, 600, 300,
+        CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
         NULL, NULL, hInstance, NULL);
 
     if (hwnd == NULL) {
@@ -227,24 +227,18 @@ int main() {
 
         get_mouse_state(&state);
 
-#ifdef USE_PC
-        std::wstringstream ss;
+        std::stringstream ss;
         ss << "Position: (" << state.x << ", " << state.y << ") ";
         ss << "Buttons: Left: " << (state.bl ? "ON" : "OFF")
             << " | Right: " << (state.br ? "ON" : "OFF");
 
-        SetWindowText(hwnd, ss.str().c_str());
+        printf("\r%s  ", ss.str().c_str());
+        fflush(stdout);
 
+#ifdef USE_PC
         // CPU負荷を減らすために少し待つ
         Sleep(50);
 #else
-        //std::cout << "Position: (" << state.x << ", " << state.y << ") ";
-        //std::cout << "Buttons: Left: " << (state.bl ? "ON" : "OFF")
-        //    << " | Right: " << (state.br ? "ON" : "OFF");
-
-        printf("\rX: %d  Y: %d  LButton: %d  RButton: %d  ", state.x, state.y, state.bl, state.br);
-        fflush(stdout);
-
         // キー入力をチェックして終了
         int key = 0;
         keysns(&key);
